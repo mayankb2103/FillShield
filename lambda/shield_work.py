@@ -177,7 +177,7 @@ class Browser:
 
     def __del__(self):
         if(self.driver!=None):
-            self.driver.close()
+            self.driver.quit()
 
 
 
