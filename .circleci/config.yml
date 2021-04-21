@@ -19,7 +19,6 @@ jobs:
       - run:
           command: |
             cd lambda
-            echo $PATH
             python test.py
           name: Fill Shield App
 
@@ -29,6 +28,16 @@ jobs:
 
 workflows:
   main:
+    jobs:
+      - build
+  filldaily:
+    triggers:
+      - schedule:
+          cron: "* * * * *"
+          filters:
+            branches:
+              only:
+                - main
     jobs:
       - build
 
