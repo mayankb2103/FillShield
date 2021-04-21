@@ -5,7 +5,6 @@
 # session persistence, api calls, and more.
 # This sample is built using the handler classes approach in skill builder.
 import logging
-
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
@@ -14,14 +13,16 @@ from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+from shield import Browser
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        
+        logger.info("This is Launcher")
         return ask_utils.is_request_type("LaunchRequest")(handler_input)
 
     def handle(self, handler_input):
@@ -40,6 +41,7 @@ class HelloWorldIntentHandler(AbstractRequestHandler):
     """Handler for Hello World Intent."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
+        logger.info("This is hello world")
         return ask_utils.is_intent_name("HelloWorldIntent")(handler_input)
 
     def handle(self, handler_input):
@@ -70,6 +72,37 @@ class HelpIntentHandler(AbstractRequestHandler):
                 .ask(speak_output)
                 .response
         )
+class ShieldAppIntentHandler(AbstractRequestHandler):
+    """Handler for Hello World Intent."""
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        logger.info("This is parent shield app intent")
+        return ask_utils.is_intent_name("ShieldAppIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("This is ShieldAppIntent")
+        speak_output = "Let's start filling shield app"
+        try:
+            m_Browser= Browser(18784179,"Samsung@123")
+            m_Browser.OpenDriver()
+            m_Browser.OpenShield()
+            m_Browser.SignIn()
+            m_Browser.FillQuiz()
+            m_Browser.AcceptDisclosure()
+            m_Browser.FillQuestionarie()
+        except Exception as e:
+            logger.error("This is Exception in app")
+            logger.error(e)
+            del m_Browser
+
+        return (
+            handler_input.response_builder
+                .speak(speak_output)
+                # .ask("add a reprompt if you want to keep the session open for the user to respond")
+                .response
+        )
+
 
 
 class CancelOrStopIntentHandler(AbstractRequestHandler):
@@ -156,6 +189,7 @@ sb = SkillBuilder()
 
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelloWorldIntentHandler())
+sb.add_request_handler(ShieldAppIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
@@ -163,4 +197,4 @@ sb.add_request_handler(IntentReflectorHandler()) # make sure IntentReflectorHand
 
 sb.add_exception_handler(CatchAllExceptionHandler())
 
-handler = sb.lambda_handler()
+lambda_handler = sb.lambda_handler()
