@@ -3,7 +3,10 @@ import logging
 
 
 logger = logging.getLogger()
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
+k_Browser= Browser(18784179,"Samsung@123")
+k_Browser.OpenDriver(True)
+del k_Browser
 m_Browser= Browser(18784179,"Samsung@123")
 m_Browser.OpenDriver(True)
 m_Browser.OpenShield()

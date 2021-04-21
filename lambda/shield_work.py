@@ -14,7 +14,7 @@ import subprocess
 import time
 import random
 loggershield = logging.getLogger()
-loggershield.setLevel(logging.INFO)
+loggershield.setLevel(logging.DEBUG)
 
 
 def strtofile(fname, strg):
