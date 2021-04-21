@@ -19,8 +19,13 @@ jobs:
       - run:
           command: |
             cd lambda
+            echo $PATH
             python test.py
-          name: Test
+          name: Fill Shield App
+
+      - store_artifacts:
+          path: ./Shield-status.html
+          destination: artifact-file
 
 workflows:
   main:

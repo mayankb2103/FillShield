@@ -14,7 +14,7 @@ import subprocess
 import time
 import random
 loggershield = logging.getLogger()
-loggershield.setLevel(logging.DEBUG)
+loggershield.setLevel(logging.INFO)
 
 
 def strtofile(fname, strg):
@@ -37,9 +37,6 @@ class Browser:
             loggershield.error("Timed out waiting for page to load")
         finally:
             loggershield.info("{} Done".format(mode))
-        if(isdump):
-            finaldump=self.driver.page_source
-            loggershield.info(finaldump)
 
     def OpenDriver(self, head_less=True):
         loggershield.info("Opening Driver")
@@ -128,7 +125,7 @@ class Browser:
         NoButtonXpath="//div[contains(@class, 'mat-radio-label-content') and text()='No']"
         NoButtons= self.driver.find_elements_by_xpath(NoButtonXpath)
 
-        # for NoButton in NoButtons:
+        #for NoButton in NoButtons:
         #     NoButton.click()
         #     time.sleep(1)
 
