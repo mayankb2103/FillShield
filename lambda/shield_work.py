@@ -161,7 +161,7 @@ class Browser:
         self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
         
         time.sleep(2)
-        OKButtonXpath="//span[@text()='CANCEL']"
+        OKButtonXpath="//span[@text()='OK']"
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
         OKButton.click()
 
