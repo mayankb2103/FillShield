@@ -1,4 +1,4 @@
-from shield import Browser
+from shield_work import Browser
 import logging
 
 
