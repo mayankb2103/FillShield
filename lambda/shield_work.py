@@ -125,7 +125,7 @@ class Browser:
         NoButtons= self.driver.find_elements_by_xpath(NoButtonXpath)
 
         for NoButton in NoButtons:
-             #NoButton.click()
+             NoButton.click()
              time.sleep(1)
 
         NoneAboveXpath="//*[@name='checkbox-5-sub-5']/./.."
