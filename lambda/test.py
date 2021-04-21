@@ -11,4 +11,5 @@ m_Browser.SignIn()
 m_Browser.FillQuiz()
 m_Browser.AcceptDisclosure()
 m_Browser.FillQuestionarie()
+#:w
 del m_Browser
