@@ -54,7 +54,6 @@ class Browser:
         opts.add_argument('--ignore-certificate-errors')
         opts.add_argument("--ignore-ssl-errors=true")
         opts.add_argument("--ssl-protocol=any")
-        loggershield.info(opts)
         
 
 
@@ -125,9 +124,9 @@ class Browser:
         NoButtonXpath="//div[contains(@class, 'mat-radio-label-content') and text()='No']"
         NoButtons= self.driver.find_elements_by_xpath(NoButtonXpath)
 
-        #for NoButton in NoButtons:
-        #     NoButton.click()
-        #     time.sleep(1)
+        for NoButton in NoButtons:
+             #NoButton.click()
+             time.sleep(1)
 
         NoneAboveXpath="//*[@name='checkbox-5-sub-5']/./.."
         NoneAbove=self.driver.find_element_by_xpath(NoneAboveXpath)
@@ -143,6 +142,7 @@ class Browser:
         NBNLXpath="//span[text()=' Neither Breakfast Nor Lunch ']"
         NBNL=self.driver.find_element_by_xpath(NBNLXpath)
         NBNL.click()
+        time.sleep(2)
         
 
 
@@ -150,7 +150,7 @@ class Browser:
         UpdateButton= self.driver.find_element_by_xpath(UpdateButtonXpath)
         UpdateButton.click()
 
-        self.waitloader("//*[@class='barcode']", mode="Quiz Filling", isdump=True)
+        self.waitloader("//*[@class='barcode']", mode="Questionarie", isdump=True)
 
 
         strtofile("Shield-status.html",self.driver.page_source)
