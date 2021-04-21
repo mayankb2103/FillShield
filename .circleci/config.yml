@@ -9,13 +9,10 @@ jobs:
       - image: cimg/python:3.8.6-browsers
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
       - run:
           command: |
             python --version
-            firefox --version
+            python check-sel.py
           name: Test
 
 workflows:
