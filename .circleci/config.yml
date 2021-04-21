@@ -18,9 +18,6 @@ jobs:
       - python/save-cache
       - run:
           command: |
-            python --version
-            firefox --version
-            python check-sel.py
             cd lambda
             python test.py
           name: Test
