@@ -124,36 +124,51 @@ class Browser:
         NoButtonXpath="//div[contains(@class, 'mat-radio-label-content') and text()='No']"
         NoButtons= self.driver.find_elements_by_xpath(NoButtonXpath)
 
-        for NoButton in NoButtons:
+        for NoButton in NoButtons[:5]:
              NoButton.click()
-             time.sleep(1)
+             time.sleep(2)
 
         NoneAboveXpath="//*[@name='checkbox-5-sub-5']/./.."
         NoneAbove=self.driver.find_element_by_xpath(NoneAboveXpath)
         NoneAbove.click()
         time.sleep(2)
+        
+        for NoButton in NoButtons[5:6]:
+            NoButton.click()
+            time.sleep(2)
 
         ## Food Details
         FoodArrowXpath="//*[@class='mat-select-arrow']"
         FoodArrow=self.driver.find_element_by_xpath(FoodArrowXpath)
         FoodArrow.click()
-        time.sleep(1)
+        time.sleep(2)
 
         NBNLXpath="//span[text()=' Neither Breakfast Nor Lunch ']"
         NBNL=self.driver.find_element_by_xpath(NBNLXpath)
         NBNL.click()
         time.sleep(2)
         
+        for NoButton in NoButtons[6:]:
+             NoButton.click()
+             time.sleep(2)
+
 
 
         UpdateButtonXpath="//*[@type='submit']"
         UpdateButton= self.driver.find_element_by_xpath(UpdateButtonXpath)
         UpdateButton.click()
-
-        self.waitloader("//*[@class='barcode']", mode="Questionarie", isdump=True)
-
+	
+        self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
+        
+        time.sleep(2)
+        OKButtonXpath="//span[@text()='CANCEL']"
+        OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
+        OKButton.click()
 
         strtofile("Shield-status.html",self.driver.page_source)
+        self.waitloader("//*[@class='barcode']", mode="Shield Fill", isdump=True)
+
+
 
 
     def getstatus():
