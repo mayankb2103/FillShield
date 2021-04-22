@@ -157,7 +157,7 @@ class Browser:
         UpdateButtonXpath="//*[@type='submit']"
         UpdateButton= self.driver.find_element_by_xpath(UpdateButtonXpath)
         UpdateButton.click()
-	
+        
         self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
         
         
@@ -168,8 +168,9 @@ class Browser:
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
         OKButton.click()
 
-        strtofile("Shield-status.html",self.driver.page_source)
+        
         self.waitloader("//*[@class='barcode']", mode="Shield Fill", isdump=True)
+        strtofile("Shield-status.html",self.driver.page_source)
 
 
 
