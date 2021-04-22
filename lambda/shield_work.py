@@ -45,15 +45,15 @@ class Browser:
 
 
         opts.headless=head_less
-        opts.add_argument('--no-sandbox')
-        opts.add_argument("--disable-dev-shm-usage") #overcome limited resource problems
+        #opts.add_argument('--no-sandbox')
+        #opts.add_argument("--disable-dev-shm-usage") #overcome limited resource problems
 
-        opts.add_argument('--disable-gpu')
+        #opts.add_argument('--disable-gpu')
 
-        opts.add_argument('--single-process')
-        opts.add_argument('--ignore-certificate-errors')
-        opts.add_argument("--ignore-ssl-errors=true")
-        opts.add_argument("--ssl-protocol=any")
+        #opts.add_argument('--single-process')
+        #opts.add_argument('--ignore-certificate-errors')
+        #opts.add_argument("--ignore-ssl-errors=true")
+        #opts.add_argument("--ssl-protocol=any")
         
 
 
