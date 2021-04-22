@@ -33,7 +33,7 @@ workflows:
   filldaily:
     triggers:
       - schedule:
-          cron: "* 6 * * *"
+          cron: "0 1 * * *"
           filters:
             branches:
               only:
