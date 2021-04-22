@@ -160,9 +160,11 @@ class Browser:
 	
         self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
         
+        
+        
         time.sleep(2)
         loggershield.info(self.driver.page_source)
-        OKButtonXpath="//span[@text()='OK']"
+        OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[2]/span'
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
         OKButton.click()
 
