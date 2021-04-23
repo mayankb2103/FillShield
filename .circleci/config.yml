@@ -10,8 +10,8 @@ jobs:
     docker:
       - image: cimg/python:3.8.6-browsers
     steps:
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - browser-tools/install-firefox
+      - browser-tools/install-geckodriver
       - checkout
       - python/load-cache
       - python/install-deps

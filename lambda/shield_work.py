@@ -60,7 +60,7 @@ class Browser:
 
 
 
-        self.driver = webdriver.Chrome(options=opts)
+        self.driver = webdriver.Firefox()
         loggershield.info("Opening Driver, Done")
 
     def OpenShield(self):
@@ -160,14 +160,14 @@ class Browser:
         
         
         self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
-        strtofile("/tmp/htmls/QFill.html",self.driver.page_source)
+
         
         
         
         time.sleep(2)
         # loggershield.info(self.driver.page_source)
         strtofile("/tmp/htmls/QFill.html",self.driver.page_source)   
-        OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[2]/span'
+        OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[1]/span'
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
         OKButton.click()
         time.sleep(3)
