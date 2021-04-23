@@ -167,7 +167,7 @@ class Browser:
         time.sleep(2)
         # loggershield.info(self.driver.page_source)
         strtofile("/tmp/htmls/QFill.html",self.driver.page_source)   
-        OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[1]/span'
+        OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[2]/span'
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
         OKButton.click()
         time.sleep(3)
