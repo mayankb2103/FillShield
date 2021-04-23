@@ -153,24 +153,36 @@ class Browser:
              time.sleep(2)
 
 
-
+        strtofile("/tmp/htmls/Qfillbefore.html",self.driver.page_source)   
         UpdateButtonXpath="//*[@type='submit']"
         UpdateButton= self.driver.find_element_by_xpath(UpdateButtonXpath)
         UpdateButton.click()
         
+        
         self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
+        strtofile("/tmp/htmls/QFill.html",self.driver.page_source)
         
         
         
         time.sleep(2)
-        loggershield.info(self.driver.page_source)
+        # loggershield.info(self.driver.page_source)
+        strtofile("/tmp/htmls/QFill.html",self.driver.page_source)   
         OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[2]/span'
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
         OKButton.click()
+        time.sleep(3)
+        strtofile("/tmp/htmls/OKClick.html",self.driver.page_source)   
+
+
+
+
+
 
         
-        self.waitloader("//*[@class='barcode']", mode="Shield Fill", isdump=True)
-        strtofile("Shield-status.html",self.driver.page_source)
+        self.waitloader("//*[@class='barcode']", mode="Shield Fill")
+        strtofile("/tmp/htmls/afterfill.html",self.driver.page_source)   
+
+        # strtofile("Shield-status.html",self.driver.page_source)
 
 
 

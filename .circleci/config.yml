@@ -18,13 +18,13 @@ jobs:
       - python/save-cache
       - run:
           command: |
+            mkdir /tmp/htmls
             cd lambda
             python test.py
           name: Fill Shield App
 
       - store_artifacts:
-          path: ./Shield-status.html
-          destination: artifact-file
+          path: /tmp/htmls
 
 workflows:
   main:
