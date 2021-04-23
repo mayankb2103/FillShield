@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import TimeoutException
 import os
 import subprocess
@@ -60,7 +60,7 @@ class Browser:
 
 
 
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Firefox(options=opts)
         loggershield.info("Opening Driver, Done")
 
     def OpenShield(self):
@@ -162,29 +162,13 @@ class Browser:
         self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
 
         
-        
-        
-        time.sleep(2)
-        loggershield.info(self.driver.page_source)
-        strtofile("/tmp/htmls/QFill.html",self.driver.page_source)   
+        time.sleep(1)
         OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[2]/span'
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
         OKButton.click()
-        loggershield.info(self.driver.page_source)
-
-        time.sleep(3)
-        strtofile("/tmp/htmls/OKClick.html",self.driver.page_source)   
-
-
-
-
-
-
-        
         self.waitloader("//*[@class='barcode']", mode="Shield Fill")
-        strtofile("/tmp/htmls/afterfill.html",self.driver.page_source)   
+        strtofile("/tmp/htmls/shield-status.html",self.driver.page_source)   
 
-        # strtofile("Shield-status.html",self.driver.page_source)
 
 
 
