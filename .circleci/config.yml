@@ -9,6 +9,8 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.8.6-browsers
+        environment:
+          TZ: "Asia/Calcutta"
     steps:
       - browser-tools/install-firefox
       - browser-tools/install-geckodriver
