@@ -165,7 +165,7 @@ class Browser:
         time.sleep(1)
         OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[2]/span'
         OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
-        OKButton.click()
+        #OKButton.click()
         self.waitloader("//*[@class='barcode']", mode="Shield Fill")
         strtofile("/tmp/htmls/shield-status.html",self.driver.page_source)   
 
