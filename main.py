@@ -1,4 +1,4 @@
-from shield_work import Browser
+from shield import Browser
 import logging
 
 
@@ -10,5 +10,5 @@ m_Browser.OpenShield()
 m_Browser.SignIn()
 m_Browser.FillQuiz()
 m_Browser.AcceptDisclosure()
-m_Browser.FillQuestionarie()
+m_Browser.FillQuestionarie(reason="Work From Home outside NCR")
 del m_Browser

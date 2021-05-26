@@ -7,14 +7,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import TimeoutException
 import os
+import sys
 import subprocess
 import time
 import random
 loggershield = logging.getLogger()
-loggershield.setLevel(logging.DEBUG)
+loggershield.setLevel(logging.INFO)
 
 
 def strtofile(fname, strg):
@@ -37,49 +38,30 @@ class Browser:
             loggershield.error("Timed out waiting for page to load")
         finally:
             loggershield.info("{} Done".format(mode))
-        if(isdump):
-            finaldump=self.driver.page_source
-            loggershield.info(finaldump)
 
     def OpenDriver(self, head_less=True):
         loggershield.info("Opening Driver")
         opts = Options()
-        tt=os.listdir("/opt")
-        loggershield.info(tt)
         
 
 
-        opts.binary_location = '/home/mayankb2103/Downloads/robert/git-hub/chrome-binary-robert/headless-chromium_latest'
-        # opts.headless=head_less
-        opts.add_argument('--no-sandbox')
-        opts.add_argument("--disable-dev-shm-usage") #overcome limited resource problems
+        opts.headless=head_less
+        #opts.add_argument('--no-sandbox')
+        #opts.add_argument("--disable-dev-shm-usage") #overcome limited resource problems
 
-        opts.add_argument('--headless')
-        opts.add_argument('--disable-gpu')
+        #opts.add_argument('--disable-gpu')
 
-        opts.add_argument('--window-size=1280x1696')
-        opts.add_argument('--user-data-dir=/tmp/user-data')
-        opts.add_argument('--hide-scrollbars')
-        opts.add_argument('--enable-logging')
-        opts.add_argument('--log-level=0')
-        opts.add_argument('--v=99')
-        opts.add_argument('--single-process')
-        opts.add_argument('--disable-dev-shm-usage')
-        opts.add_argument('-disable-extensions')
-        opts.add_argument('--ignore-certificate-errors')
-        opts.add_argument("--ignore-ssl-errors=true")
-        opts.add_argument("--ssl-protocol=any")
-        opts.add_argument('--homedir=/tmp') 
-        opts.add_argument('--disk-cache-dir=/tmp/cache-dir')
-        opts.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.3163.100 Safari/537.36')
-        loggershield.info(opts)
+        #opts.add_argument('--single-process')
+        #opts.add_argument('--ignore-certificate-errors')
+        #opts.add_argument("--ignore-ssl-errors=true")
+        #opts.add_argument("--ssl-protocol=any")
         
 
 
 
 
 
-        self.driver = webdriver.Chrome(executable_path="/home/mayankb2103/Downloads/robert/git-hub/chrome-binary-robert/chromedriver", options=opts)
+        self.driver = webdriver.Firefox(options=opts)
         loggershield.info("Opening Driver, Done")
 
     def OpenShield(self):
@@ -90,8 +72,6 @@ class Browser:
     def SignIn(self):
         loggershield.info("SignIn Start")
         time.sleep(3)
-        signindump=self.driver.page_source
-        strtofile("signin.html",signindump)
         empid= self.driver.find_element_by_xpath("//*[@formcontrolname='empId']")
         passwd= self.driver.find_element_by_xpath("//*[@formcontrolname='password']")
         submitbut= self.driver.find_element_by_xpath("//*[@type='submit']")
@@ -138,40 +118,76 @@ class Browser:
         time.sleep(1)
         # strtofile("questionarie.html",self.driver.page_source)
 
-    def FillQuestionarie(self):
+    def FillQuestionarie(self, reason=None):
         loggershield.info("Filling Questionarie")
         NoButtonXpath="//div[contains(@class, 'mat-radio-label-content') and text()='No']"
+        YesButtonXpath="//div[contains(@class, 'mat-radio-label-content') and text()='Yes']"
         NoButtons= self.driver.find_elements_by_xpath(NoButtonXpath)
+        YesButtons= self.driver.find_elements_by_xpath(YesButtonXpath)
 
-        # for NoButton in NoButtons:
-        #     NoButton.click()
-        #     time.sleep(1)
+        lastYesButton=YesButtons[-1]
+
+        for NoButton in NoButtons[:5]:
+             NoButton.click()
+             time.sleep(2)
 
         NoneAboveXpath="//*[@name='checkbox-5-sub-5']/./.."
         NoneAbove=self.driver.find_element_by_xpath(NoneAboveXpath)
         NoneAbove.click()
         time.sleep(2)
+        
+        for NoButton in NoButtons[5:6]:
+            NoButton.click()
+            time.sleep(2)
 
         ## Food Details
         FoodArrowXpath="//*[@class='mat-select-arrow']"
         FoodArrow=self.driver.find_element_by_xpath(FoodArrowXpath)
         FoodArrow.click()
-        time.sleep(1)
+        time.sleep(2)
 
         NBNLXpath="//span[text()=' Neither Breakfast Nor Lunch ']"
         NBNL=self.driver.find_element_by_xpath(NBNLXpath)
         NBNL.click()
+        time.sleep(2)
+           
+         
         
+        
+        for NoButton in NoButtons[6:-1]:
+            NoButton.click()
+            time.sleep(2)
 
+        if(reason!=None):
+            lastYesButton.click()
+            FillReasonXpath="//input[@id='mat-input-5']"
+            FillReason= self.driver.find_element_by_xpath(FillReasonXpath)
+            FillReason.send_keys(reason)
+            time.sleep(2)
 
+        else:
+            NoButton=NoButtons[-1]
+            NoButton.click()
+            time.sleep(2)
+        
         UpdateButtonXpath="//*[@type='submit']"
         UpdateButton= self.driver.find_element_by_xpath(UpdateButtonXpath)
         UpdateButton.click()
+        
+        
+        self.waitloader("//span[text()='OK']", mode="Questionarie Fill")
 
-        self.waitloader("//*[@class='barcode']", mode="Quiz Filling", isdump=True)
+        
+        time.sleep(1)
+        OKButtonXpath='//*[@id="mat-dialog-2"]/app-com-dailog/div[2]/button[2]/span'
+        OKButton= self.driver.find_element_by_xpath(OKButtonXpath)
+        sys.exit("Test exit")
+        #OKButton.click()
+        self.waitloader("//*[@class='barcode']", mode="Shield Fill")
+        strtofile("/tmp/htmls/shield-status.html",self.driver.page_source)   
 
 
-        strtofile("Shield-status.html",self.driver.page_source)
+
 
 
     def getstatus():
@@ -179,8 +195,9 @@ class Browser:
         
 
     def __del__(self):
+        loggershield.info("Destructor called")        
         if(self.driver!=None):
-            self.driver.close()
+            self.driver.quit()
 
 
 
